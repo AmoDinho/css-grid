@@ -52,6 +52,20 @@
     <div class="itm itm40">40</div>
   </div>
 
+  <div class="container2">
+    <div class="itm itm1">1</div>
+    <div class="itm itm2">2</div>
+    <div class="itm itm3">3</div>
+    <div class="itm itm4">4</div>
+    <div class="itm itm5">5</div>
+    <div class="itm itm6">6</div>
+    <div class="itm itm7">7</div>
+    <div class="itm itm8">8</div>
+    <div class="itm itm9">9</div>
+    <div class="itm itm10">10</div>
+    
+  </div>
+
   <style>
     /*
       justify-items:
@@ -70,8 +84,37 @@
     .container {
       display: grid;
       grid-gap: 20px;
+      height:500px;
       grid-template-columns: repeat(10, 1fr);
+      justify-items:end;
+      align-items: center;
+      /*place-items: center center; */
     }
+
+    .itm{
+      background:wheat;
+    }
+
+
+
+    .container2 {
+      display: grid;
+      grid-gap: 20px;
+      grid-template-rows: repeat(5,100px);
+      grid-template-columns: repeat(5, 100px);
+      justify-content:space-between;
+      border: 10px solid var(--yellow);
+      place-items: stretch  stretch; 
+      align-content: space-between;
+    }
+
+    .itm5{
+      justify-self:center;
+      align-self:center;
+    }
+
+   
+
   </style>
 </body>
 
