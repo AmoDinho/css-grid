@@ -47,7 +47,7 @@
 
     .close {
       background: none;
-      color: white;
+      color: black;
       border: 0;
     }
 
@@ -55,10 +55,51 @@
       display:grid;
       grid-template-columns: repeat(auto-fill, 100px);
       grid-auto-rows: 100px;
+      grid-auto-flow: dense;
     }
+
+
     .item{
       overflow: hidden;
+      display: grid;
+      grid-template-columns: 1;
+      grid-template-rows: 1;
     }
+
+    .item img{
+      grid-column: 1/-1;
+      grid-row: 1/-1;
+      width: 100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+  .item__overlay{
+    background: #ffc80062;
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    position: relative;
+    display: grid;
+    align-items: center;
+    transition: 0.2s;
+    transform: translateY(100%);
+  }
+
+  .item__overlay button {
+    background: none;
+    border: 2px solid white;
+    color: white;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+  }
+
+  .item:hover .item__overlay{
+    transform: translateY(0);
+  }
+
+
+
 
    .item.v2{
     grid-row:span 2;
@@ -74,15 +115,15 @@
 
 
    .item.h2{
-    grid-row:span 2;
+    grid-column:span 2;
    } 
  
    .item.h3{
-    grid-row:span 3;
+    grid-column:span 3;
    }
 
    .item.h4{
-    grid-row:span 4;
+    grid-column:span 4;
    }
 
 
@@ -100,9 +141,11 @@
 
     .overlay.open {
       display: grid;
+      align-items:center;
+      justify-items: center;
     }
 
-    .overlay figure {
+    .overlay .overlay-inner {
       background: white;
       width: 700px;
       padding: 20px;
@@ -117,8 +160,8 @@
 
     const gallery = document.querySelector('.gallery');
     const overlay = document.querySelector('.overlay');
-    const overlayImage = document.querySelector('.overlayImage');
-    const overlayClose = document.querySelector('.overlayClose');
+    const overlayImage = document.querySelector('img');
+    const overlayClose = document.querySelector('.close');
 
     function generateHTML([h,v]){
       return `
@@ -135,14 +178,40 @@
       return Math.floor(Math.random() * limit) + 1;
     }
 
+
+    function handleClick(e){
+      const src = e.currentTarget.querySelector('img').src;
+      overlayImage.src = src;
+      overlay.classList.add('open');
+
+    }
+
+
+   
+
+    function close(){
+      overlay.classList.remove('open');
+    }
+
+
     const digits = Array.from({length:50}, ()=>
-          [randomNumber(4), randomNumber(4)] );
+          [randomNumber(4), randomNumber(4)] ).concat([[1,1],[1,1],
+          [1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1]
+          ,[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],
+          [1,1],[1,1],[1,1],[1,1] ]);
 
 
           const html = digits.map(generateHTML).join('');
           
           gallery.innerHTML =html;
-  </script>
+
+
+          const items = document.querySelectorAll('.item');
+
+          items.forEach(item => item.addEventListener('click',handleClick));
+ 
+          overlayClose.addEventListener('click', close);
+        </script>
 </body>
 
 </html>
